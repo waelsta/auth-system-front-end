@@ -96,86 +96,79 @@
 //     .required(),
 // });
 
- function SignUp() {
-//   const dispatch = useDispatch();
-//   return (
-//     <Formik
-//       initialValues={initialState}
-//       validationSchema={validationSchem}
-//       onSubmit={(values, actions) => {
-//         console.table(values);
-//         //dispatch(signup(values));
-//         actions.setSubmitting(false);
-//       }}
-//     >
-//       {props => (
-//         <Form>
-//           <div>
-//             <label htmlFor="firstName : ">First name :</label>
-//             <Field type="text" name="firstName" onChange={props.handleChange} />
-//             <ErrorMessage component="div" name="firstName" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="lastName">Last name : </label>
-//             <Field type="text" name="lastName" onChange={props.handleChange} />
-//             <ErrorMessage component="div" name="lastName" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="email">Email : </label>
-//             <Field type="text" name="email" onChange={props.handleChange} />
-//             <ErrorMessage component="div" name="email" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="password">Password : </label>
-//             <Field
-//               type="password"
-//               name="password"
-//               onChange={props.handleChange}
-//             />
-//             <ErrorMessage component="div" name="password" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="passwordMatch">Retype password : </label>
-//             <Field
-//               type="passwordMatch"
-//               name="passwordMatch"
-//               onChange={props.handleChange}
-//             />
-//             <ErrorMessage component="div" name="passwordMatch" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="phone">Phone Number : </label>
-//             <Field type="tel" name="phone" onChange={props.handleChange} />
-//             <ErrorMessage component="div" name="phone" />
-//           </div>
-
-//           <div>
-//             <label htmlFor="city">select city : </label>
-//             <Field component="select" name="city">
-//               {cities.map((city, index) => (
-//                 <option key={index} value={city}>
-//                   {city}
-//                 </option>
-//               ))}
-//             </Field>
-//             <ErrorMessage component="div" name="city" />
-//           </div>
-
-//           <Field
-//             name="submit"
-//             type="submit"
-//             value="submit"
-//             disabled={!(props.dirty && props.isValid)}
-//           />
-//         </Form>
-//       )}
-//     </Formik>
-//   );
+function SignUp() {
+  //   const dispatch = useDispatch();
+  //   return (
+  //     <Formik
+  //       initialValues={initialState}
+  //       validationSchema={validationSchem}
+  //       onSubmit={(values, actions) => {
+  //         console.table(values);
+  //         //dispatch(signup(values));
+  //         actions.setSubmitting(false);
+  //       }}
+  //     >
+  //       {props => (
+  //         <Form>
+  //           <div>
+  //             <label htmlFor="firstName : ">First name :</label>
+  //             <Field type="text" name="firstName" onChange={props.handleChange} />
+  //             <ErrorMessage component="div" name="firstName" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="lastName">Last name : </label>
+  //             <Field type="text" name="lastName" onChange={props.handleChange} />
+  //             <ErrorMessage component="div" name="lastName" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="email">Email : </label>
+  //             <Field type="text" name="email" onChange={props.handleChange} />
+  //             <ErrorMessage component="div" name="email" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="password">Password : </label>
+  //             <Field
+  //               type="password"
+  //               name="password"
+  //               onChange={props.handleChange}
+  //             />
+  //             <ErrorMessage component="div" name="password" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="passwordMatch">Retype password : </label>
+  //             <Field
+  //               type="passwordMatch"
+  //               name="passwordMatch"
+  //               onChange={props.handleChange}
+  //             />
+  //             <ErrorMessage component="div" name="passwordMatch" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="phone">Phone Number : </label>
+  //             <Field type="tel" name="phone" onChange={props.handleChange} />
+  //             <ErrorMessage component="div" name="phone" />
+  //           </div>
+  //           <div>
+  //             <label htmlFor="city">select city : </label>
+  //             <Field component="select" name="city">
+  //               {cities.map((city, index) => (
+  //                 <option key={index} value={city}>
+  //                   {city}
+  //                 </option>
+  //               ))}
+  //             </Field>
+  //             <ErrorMessage component="div" name="city" />
+  //           </div>
+  //           <Field
+  //             name="submit"
+  //             type="submit"
+  //             value="submit"
+  //             disabled={!(props.dirty && props.isValid)}
+  //           />
+  //         </Form>
+  //       )}
+  //     </Formik>
+  //   );
 }
 
- export default SignUp;
+export default SignUp;

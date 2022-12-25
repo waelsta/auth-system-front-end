@@ -6,13 +6,12 @@ import SignIn from './pages/SignIn';
 function App() {
   return (
     <div className="App bg-gray-100">
-      <Navbar/> 
-     <Routes>
-      <Route path='/client/signin' element={<SignIn/>} />
-      <Route path='/landingpage' element={<Landing/>} />
-      <Route path='/client/signin' element={<SignIn/>} />
-   
-     </Routes>
+      <Navbar />
+      <Routes>
+        <Route path="/client/signin" element={<SignIn />} />
+        <Route path="/landingpage" element={<Landing />} />
+        <Route path="/client/signin" element={<SignIn />} />
+      </Routes>
     </div>
   );
 }
