@@ -43,7 +43,7 @@ const clientSlice = createSlice({
     getClientDataSuccess: (state, action) => {
       state.isFetching = false;
       state.error = null;
-      state.client = action.payload.data;
+      state.client = action.payload;
     },
     getClientDataFail: (state, action) => {
       state.isFetching = false;

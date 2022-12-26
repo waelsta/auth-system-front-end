@@ -9,6 +9,7 @@ import {
   errorMessageStyles,
   formStyles
 } from '../styles/common-styles';
+import { IClient } from '../types/client';
 
 const SignUpForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,21 +41,21 @@ const SignUpForm: React.FC = () => {
     'zaghouan'
   ];
 
-  const initialValues = {
-    firstName: '',
-    lastName: '',
+  const initialValues: IClient = {
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
-    passwordMatch: '',
+    password_match: '',
     street: '',
     city: '',
-    phone: ''
+    phone_number: ''
   };
 
   // form validation schema
   const validationSchema = yup.object().shape({
-    firstName: yup.string().min(3, 'minimum length is 3').required(),
-    lastName: yup.string().min(3, 'minimum length is 3').required(),
+    first_name: yup.string().min(3, 'minimum length is 3').required(),
+    last_name: yup.string().min(3, 'minimum length is 3').required(),
     password: yup
       .string()
       .min(8, 'minimum number of characters is 8')
@@ -71,7 +72,7 @@ const SignUpForm: React.FC = () => {
         }
       )
       .required(),
-    passwordMatch: yup
+    password_match: yup
       .string()
       .oneOf([yup.ref('password')], 'your password does not match')
       .required(),
@@ -95,7 +96,7 @@ const SignUpForm: React.FC = () => {
         return false;
       })
       .required(),
-    phone: yup
+    phone_number: yup
       .string()
       .min(8, 'must have 8 digits')
       .test('isValideNumber', 'please enter an 8 digits number', value => {
@@ -121,36 +122,36 @@ const SignUpForm: React.FC = () => {
       {(props: FormikProps<any>) => (
         <Form className={formStyles}>
           <div className="">
-            <label className={labelStyles} htmlFor="firstName : ">
+            <label className={labelStyles} htmlFor="first_name : ">
               First name :
             </label>
             <Field
               className={inputFieldStyles}
               type="text"
-              name="firstName"
+              name="first_name"
               onChange={props.handleChange}
             />
             <ErrorMessage
               className={errorMessageStyles}
               component="div"
-              name="firstName"
+              name="first_name"
             />
           </div>
 
           <div>
-            <label className={labelStyles} htmlFor="lastName">
+            <label className={labelStyles} htmlFor="last_name">
               Last name :{' '}
             </label>
             <Field
               className={inputFieldStyles}
               type="text"
-              name="lastName"
+              name="last_name"
               onChange={props.handleChange}
             />
             <ErrorMessage
               className={errorMessageStyles}
               component="div"
-              name="lastName"
+              name="last_name"
             />
           </div>
 
@@ -189,36 +190,36 @@ const SignUpForm: React.FC = () => {
           </div>
 
           <div>
-            <label className={labelStyles} htmlFor="passwordMatch">
+            <label className={labelStyles} htmlFor="password_match">
               Retype password :{' '}
             </label>
             <Field
               className={inputFieldStyles}
               type="password"
-              name="passwordMatch"
+              name="password_match"
               onChange={props.handleChange}
             />
             <ErrorMessage
               className={errorMessageStyles}
               component="div"
-              name="passwordMatch"
+              name="password_match"
             />
           </div>
 
           <div>
-            <label className={labelStyles} htmlFor="phone">
+            <label className={labelStyles} htmlFor="phone_number">
               Phone Number :{' '}
             </label>
             <Field
               className={inputFieldStyles}
               type="tel"
-              name="phone"
+              name="phone_number"
               onChange={props.handleChange}
             />
             <ErrorMessage
               className={errorMessageStyles}
               component="div"
-              name="phone"
+              name="phone_number"
             />
           </div>
 

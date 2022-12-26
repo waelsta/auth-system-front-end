@@ -41,10 +41,10 @@ export const axiosClientSignUp = async (client: IClient) => {
 
 export const axiosGetClientData = async () => {
   try {
-    const client = await axiosClient.get('/client', {
+    const response = await axiosClient.get('/client', {
       withCredentials: true
     });
-    return client;
+    return response?.data;
   } catch (err: any) {
     throw new Error(err.message);
   }
