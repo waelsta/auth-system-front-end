@@ -14,11 +14,7 @@ import {
   axiosSignIn,
   axiosClientSignUp
 } from '../../utils/axios-config';
-//interfaces
-interface IAction {
-  type: string;
-  payload: any;
-}
+import { PayloadAction } from '@reduxjs/toolkit';
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
@@ -34,7 +30,9 @@ function* callGetClientData(): Generator<any> {
 }
 
 //client sign in generator function
-function* callClientSignIn(action: IAction): Generator<any> {
+function* callClientSignIn(
+  action: PayloadAction<{ email: string; password: string }>
+): Generator<any> {
   const { email, password } = action.payload;
   try {
     yield call(axiosSignIn, { email, password });
@@ -48,15 +46,16 @@ function* callClientSignIn(action: IAction): Generator<any> {
 }
 
 //client sign up generator function
-function* callClientSignUp(action: IAction): Generator<any> {
+function* callClientSignUp(action: PayloadAction<IClient>): Generator<any> {
   const {
-    firstName: first_name,
-    lastName: last_name,
+    first_name,
+    last_name,
     email,
     password,
+    password_match,
     city,
     street,
-    phone: phone_number
+    phone_number
   } = action.payload;
   const client: IClient = {
     first_name,
@@ -65,7 +64,8 @@ function* callClientSignUp(action: IAction): Generator<any> {
     password,
     city,
     street,
-    phone_number
+    phone_number,
+    password_match
   };
   try {
     yield call(axiosClientSignUp, client);
