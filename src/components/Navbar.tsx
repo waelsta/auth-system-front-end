@@ -10,7 +10,7 @@ const Navbar: React.FC<NavbarProps> = props => {
     <nav className="bg-gray-800 p-4">
       <ul className="flex justify-between items-center">
         <li className="text-white font-bold uppercase tracking-wide">
-          <Link to="/" className="text-white hover:text-gray-400">
+          <Link to="/landingpage" className="text-white hover:text-gray-400">
             Home
           </Link>
         </li>

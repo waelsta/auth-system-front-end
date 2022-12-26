@@ -1,53 +1,19 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
+import { IClient } from '../../types/client';
 import {
   getClientData,
   clientSignInFail,
   clientSignInSuccess,
   getClientDataSuccess,
-  getClientDataFail
+  clientSignUpSuccess,
+  getClientDataFail,
+  clientSignUpFail
 } from './clientSlice';
-const API_URL = 'http://localhost:5000/api/v1';
-
-//axios config
-const axiosClient = axios.create({
-  baseURL: API_URL,
-  headers: {
-    Accept: 'Application/json',
-    'Content-Type': 'Application/json'
-  }
-});
-interface ISignindata {
-  username: string;
-  password: string;
-}
-//axios sign in function
-export const axiosSignIn = async (data: ISignindata) => {
-  const { username: email, password } = data;
-  try {
-    return await axiosClient.post(
-      '/auth/client/signin',
-      { email, password },
-      {
-        withCredentials: true
-      }
-    );
-  } catch (err: any) {
-    console.log(err.message);
-  }
-};
-
-export const axiosGetClientData = async () => {
-  try {
-    const user = await axiosClient.get('/client', {
-      withCredentials: true
-    });
-    console.log(user);
-    return user;
-  } catch (err: any) {
-    console.log(err.message);
-  }
-};
+import {
+  axiosGetClientData,
+  axiosSignIn,
+  axiosClientSignUp
+} from '../../utils/axios-config';
 //interfaces
 interface IAction {
   type: string;
@@ -56,8 +22,9 @@ interface IAction {
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
+  let client;
   try {
-    const client = yield call(axiosGetClientData);
+    client = yield call(axiosGetClientData);
     yield put(getClientDataSuccess(client));
   } catch (err: any) {
     err.response?.data
@@ -66,11 +33,11 @@ function* callGetClientData(): Generator<any> {
   }
 }
 
-//user sign in generator function
+//client sign in generator function
 function* callClientSignIn(action: IAction): Generator<any> {
-  const { username, password } = action.payload;
+  const { email, password } = action.payload;
   try {
-    yield call(axiosSignIn, { username, password });
+    yield call(axiosSignIn, { email, password });
     yield put(clientSignInSuccess());
     yield put(getClientData());
   } catch (err: any) {
@@ -80,9 +47,43 @@ function* callClientSignIn(action: IAction): Generator<any> {
   }
 }
 
+//client sign up generator function
+function* callClientSignUp(action: IAction): Generator<any> {
+  const {
+    firstName: first_name,
+    lastName: last_name,
+    email,
+    password,
+    city,
+    street,
+    phone: phone_number
+  } = action.payload;
+  const client: IClient = {
+    first_name,
+    last_name,
+    email,
+    password,
+    city,
+    street,
+    phone_number
+  };
+  try {
+    yield call(axiosClientSignUp, client);
+    yield put(clientSignUpSuccess(client));
+  } catch (err: any) {
+    err.response?.data
+      ? yield put(clientSignUpFail(err.response?.data))
+      : yield put(clientSignUpFail(err.message));
+  }
+}
+
 //client watcher
 function* onClientSignIn() {
   yield takeLatest('clientReducer/clientSignIn', callClientSignIn);
+}
+
+function* onClientSignUp() {
+  yield takeLatest('clientReducer/clientSignUp', callClientSignUp);
 }
 
 function* onGetClientData() {
@@ -91,5 +92,9 @@ function* onGetClientData() {
 
 //call all client sagas
 export default function* clientSagas() {
-  yield all([call(onClientSignIn), call(onGetClientData)]);
+  yield all([
+    call(onClientSignIn),
+    call(onGetClientData),
+    call(onClientSignUp)
+  ]);
 }
