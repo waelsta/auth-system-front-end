@@ -7,11 +7,10 @@ const clientSlice = createSlice({
   name: 'clientReducer',
   initialState: {
     isLoggedIn: false,
-    username: '',
-    password: '',
     isFetching: false,
     error: null,
-    client: null
+    client: null,
+    response: ''
   },
   reducers: {
     clientSignIn: (state, action) => {
@@ -24,13 +23,26 @@ const clientSlice = createSlice({
     clientSignInFail: (state, action) => {
       state.isLoggedIn = false;
       state.isFetching = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
+    clientSignUp: (state, action) => {
+      state.isFetching = true;
+    },
+    clientSignUpSuccess: (state, action) => {
+      state.isFetching = false;
+      state.response = 'signed up successfully !';
+    },
+    clientSignUpFail: (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    },
+
     getClientData: state => {
       state.isFetching = true;
     },
     getClientDataSuccess: (state, action) => {
       state.isFetching = false;
+      state.error = null;
       state.client = action.payload.data;
     },
     getClientDataFail: (state, action) => {
@@ -43,6 +55,9 @@ export const {
   clientSignIn,
   clientSignInSuccess,
   clientSignInFail,
+  clientSignUp,
+  clientSignUpFail,
+  clientSignUpSuccess,
   getClientData,
   getClientDataFail,
   getClientDataSuccess
