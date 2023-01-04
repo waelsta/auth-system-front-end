@@ -1,7 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
-import { clientSignUp } from '../redux/client/clientSlice';
-import { useDispatch } from 'react-redux';
+import {
+  clientSignUp,
+  selectCurrentClient,
+  selectResponse,
+  selectShowAlert
+} from '../redux/client/clientSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   classicButtonStyles,
   inputFieldStyles,
@@ -9,8 +14,11 @@ import {
   errorMessageStyles,
   formStyles
 } from '../styles/common-styles';
+import Alert, { IAlert } from './Alert';
 
 const SignUpForm: React.FC = () => {
+  const showAlert: boolean = useSelector(selectShowAlert);
+  const response: IAlert | null = useSelector(selectResponse);
   const dispatch = useDispatch();
 
   const cities = [
@@ -108,163 +116,173 @@ const SignUpForm: React.FC = () => {
       })
       .required()
   });
+
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={(values, actions) => {
-        console.table(values);
-        dispatch(clientSignUp(values));
-        actions.setSubmitting(false);
-      }}
-    >
-      {(props: FormikProps<any>) => (
-        <Form className={formStyles}>
-          <div className="">
-            <label className={labelStyles} htmlFor="firstName : ">
-              First name :
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="text"
-              name="firstName"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="firstName"
-            />
-          </div>
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values, actions) => {
+          console.table(values);
+          dispatch(clientSignUp(values));
+          actions.setSubmitting(false);
+        }}
+      >
+        {(props: FormikProps<any>) => (
+          <Form className={formStyles}>
+            {showAlert && (
+              <Alert message={response?.message} error={response?.error} />
+            )}
+            <div className="">
+              <label className={labelStyles} htmlFor="firstName : ">
+                First name :
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="text"
+                name="firstName"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="firstName"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="lastName">
-              Last name :{' '}
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="text"
-              name="lastName"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="lastName"
-            />
-          </div>
+            <div>
+              <label className={labelStyles} htmlFor="lastName">
+                Last name :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="text"
+                name="lastName"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="lastName"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="email">
-              Email :{' '}
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="text"
-              name="email"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="email"
-            />
-          </div>
+            <div>
+              <label className={labelStyles} htmlFor="email">
+                Email :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="text"
+                name="email"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="email"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="password">
-              Password :{' '}
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="password"
-              name="password"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="password"
-            />
-          </div>
+            <div>
+              <label className={labelStyles} htmlFor="password">
+                Password :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="password"
+                name="password"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="password"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="passwordMatch">
-              Retype password :{' '}
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="password"
-              name="passwordMatch"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="passwordMatch"
-            />
-          </div>
+            <div>
+              <label className={labelStyles} htmlFor="passwordMatch">
+                Retype password :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="password"
+                name="passwordMatch"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="passwordMatch"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="phone">
-              Phone Number :{' '}
-            </label>
-            <Field
-              className={inputFieldStyles}
-              type="tel"
-              name="phone"
-              onChange={props.handleChange}
-            />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="phone"
-            />
-          </div>
+            <div>
+              <label className={labelStyles} htmlFor="phone">
+                Phone Number :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="tel"
+                name="phone"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="phone"
+              />
+            </div>
 
-          <div>
-            <label className={labelStyles} htmlFor="city">
-              select city :{' '}
-            </label>
-            <Field className={inputFieldStyles} component="select" name="city">
-              {cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </Field>
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="city"
-            />
-          </div>
-          <div>
-            <label className={labelStyles} htmlFor="Street">
-              Street :{' '}
-            </label>
+            <div>
+              <label className={labelStyles} htmlFor="city">
+                select city :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                component="select"
+                name="city"
+              >
+                {cities.map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="city"
+              />
+            </div>
+            <div>
+              <label className={labelStyles} htmlFor="Street">
+                Street :{' '}
+              </label>
+              <Field
+                className={inputFieldStyles}
+                type="text"
+                name="street"
+                onChange={props.handleChange}
+              />
+              <ErrorMessage
+                className={errorMessageStyles}
+                component="div"
+                name="street"
+              />
+            </div>
             <Field
-              className={inputFieldStyles}
-              type="text"
-              name="street"
-              onChange={props.handleChange}
+              name="submit"
+              type="submit"
+              value="submit"
+              className={classicButtonStyles}
+              disabled={!(props.dirty && props.isValid)}
             />
-            <ErrorMessage
-              className={errorMessageStyles}
-              component="div"
-              name="street"
-            />
-          </div>
-          <Field
-            name="submit"
-            type="submit"
-            value="submit"
-            className={classicButtonStyles}
-            disabled={!(props.dirty && props.isValid)}
-          />
-        </Form>
-      )}
-    </Formik>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

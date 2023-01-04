@@ -6,4 +6,5 @@ export interface IClient {
   email: string;
   city: string;
   password: string;
+  password_match: string;
 }

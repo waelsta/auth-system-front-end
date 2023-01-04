@@ -24,6 +24,10 @@ export const axiosSignIn = async (data: ISignindata) => {
       }
     );
   } catch (err: any) {
+    console.log(err);
+    if (err.response) {
+      throw new Error(err.response.data.error);
+    }
     throw new Error(err.message);
   }
 };
@@ -35,6 +39,10 @@ export const axiosClientSignUp = async (client: IClient) => {
       withCredentials: true
     });
   } catch (err: any) {
+    console.log(err);
+    if (err.response) {
+      throw new Error(err.response.data.error);
+    }
     throw new Error(err.message);
   }
 };
@@ -46,6 +54,9 @@ export const axiosGetClientData = async () => {
     });
     return client;
   } catch (err: any) {
+    if (err.response) {
+      throw new Error(err.response.data.error);
+    }
     throw new Error(err.message);
   }
 };

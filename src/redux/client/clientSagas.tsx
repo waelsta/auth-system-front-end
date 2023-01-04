@@ -7,7 +7,9 @@ import {
   getClientDataSuccess,
   clientSignUpSuccess,
   getClientDataFail,
-  clientSignUpFail
+  clientSignUpFail,
+  displayAlert,
+  removeAlert
 } from './clientSlice';
 import {
   axiosGetClientData,
@@ -19,6 +21,9 @@ interface IAction {
   type: string;
   payload: any;
 }
+
+const delay = (time: number) =>
+  new Promise(resolve => setTimeout(resolve, time));
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
@@ -41,9 +46,10 @@ function* callClientSignIn(action: IAction): Generator<any> {
     yield put(clientSignInSuccess());
     yield put(getClientData());
   } catch (err: any) {
-    err.response?.data
-      ? yield put(clientSignInFail(err.response?.data))
-      : yield put(clientSignInFail(err.message));
+    yield put(clientSignUpFail(err.message));
+    yield put(displayAlert());
+    yield call(delay, 2000);
+    yield put(removeAlert());
   }
 }
 
@@ -56,7 +62,8 @@ function* callClientSignUp(action: IAction): Generator<any> {
     password,
     city,
     street,
-    phone: phone_number
+    phone: phone_number,
+    passwordMatch: password_match
   } = action.payload;
   const client: IClient = {
     first_name,
@@ -65,15 +72,23 @@ function* callClientSignUp(action: IAction): Generator<any> {
     password,
     city,
     street,
-    phone_number
+    phone_number,
+    password_match
   };
+
   try {
-    yield call(axiosClientSignUp, client);
-    yield put(clientSignUpSuccess(client));
+    const message: any = yield call(axiosClientSignUp, client);
+    console.log(message);
+    yield put(clientSignUpSuccess({ client, message: message.data }));
+    yield put(displayAlert());
+    yield call(delay, 2000);
+    yield put(removeAlert());
   } catch (err: any) {
-    err.response?.data
-      ? yield put(clientSignUpFail(err.response?.data))
-      : yield put(clientSignUpFail(err.message));
+    console.log(err);
+    yield put(clientSignUpFail(err.message));
+    yield put(displayAlert());
+    yield call(delay, 2000);
+    yield put(removeAlert());
   }
 }
 
