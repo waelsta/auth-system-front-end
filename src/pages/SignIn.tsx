@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import {
   clientSignIn,
@@ -28,9 +29,10 @@ const SignIn: React.FC = () => {
     const name = e.target.name;
     setCredentials({ ...Credentials, [name]: value });
   };
-  {
+  useEffect(() => {
     status && navigate('/client/home');
-  }
+  }, [status]);
+
   return (
     <div className="h-screen">
       <div className={formStyles}>
@@ -64,7 +66,6 @@ const SignIn: React.FC = () => {
         >
           Login
         </button>
-        <div></div>
       </div>
     </div>
   );

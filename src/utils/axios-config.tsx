@@ -10,7 +10,8 @@ const API_URL = 'http://localhost:5000/api/v1';
 
 //axios config
 const axiosClient = axios.create({
-  baseURL: API_URL
+  baseURL: API_URL,
+  withCredentials: true
 });
 //axios sign in function
 export const axiosSignIn = async (data: ISignindata) => {
@@ -39,7 +40,6 @@ export const axiosClientSignUp = async (client: IClient) => {
       withCredentials: true
     });
   } catch (err: any) {
-    console.log(err);
     if (err.response) {
       throw new Error(err.response.data.error);
     }
@@ -49,10 +49,22 @@ export const axiosClientSignUp = async (client: IClient) => {
 
 export const axiosGetClientData = async () => {
   try {
-    const client = await axiosClient.get('/client', {
+    return await axiosClient.get('/client', {
       withCredentials: true
     });
-    return client;
+  } catch (err: any) {
+    if (err.response) {
+      throw new Error(err.response.data.error);
+    }
+    throw new Error(err.message);
+  }
+};
+
+export const axiosClientSignout = async () => {
+  try {
+    return await axiosClient.post('/auth/client/signout', {
+      withCredentials: true
+    });
   } catch (err: any) {
     if (err.response) {
       throw new Error(err.response.data.error);

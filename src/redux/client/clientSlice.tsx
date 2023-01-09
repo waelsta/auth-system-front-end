@@ -1,5 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IClient } from '../../types/client';
 import { RootState } from '../store';
+
+//interface
+interface IclientReducerState {
+  displayAlert: boolean;
+  isLoggedIn: boolean;
+  isFetching: boolean;
+  error: boolean;
+  client: IClient | null;
+  message: string;
+}
+const initialState: IclientReducerState = {
+  displayAlert: false,
+  isLoggedIn: false,
+  isFetching: false,
+  error: false,
+  client: null,
+  message: ''
+};
+//selectors
 export const selectCurrentClient = (state: RootState) =>
   state.clientReducer.client;
 
@@ -11,16 +31,11 @@ export const selectShowAlert = (state: RootState) =>
   state.clientReducer.displayAlert;
 export const selectStatus = (state: RootState) =>
   state.clientReducer.isLoggedIn;
+
+//slice
 const clientSlice = createSlice({
   name: 'clientReducer',
-  initialState: {
-    displayAlert: false,
-    isLoggedIn: false,
-    isFetching: false,
-    error: false,
-    client: null,
-    message: ''
-  },
+  initialState,
   reducers: {
     clientSignIn: (state, action) => {
       state.isFetching = true;
@@ -62,13 +77,21 @@ const clientSlice = createSlice({
       state.isFetching = false;
       state.error = false;
       state.isLoggedIn = true;
-      state.client = action.payload.data;
+      state.client = action.payload;
     },
-    getClientDataFail: (state, action) => {
+    getClientDataFail: state => {
       state.isFetching = false;
     },
-    signout: state => {
+    clientSignout: state => {
+      state.isFetching = true;
+    },
+    clientSignoutSuccess: state => {
       state.isLoggedIn = false;
+      state.isFetching = false;
+      state.client = null;
+    },
+    clientSignoutFail: (state, action) => {
+      state.isFetching = false;
     }
   }
 });
@@ -85,6 +108,8 @@ export const {
   getClientDataSuccess,
   displayAlert,
   removeAlert,
-  signout
+  clientSignout,
+  clientSignoutSuccess,
+  clientSignoutFail
 } = clientSlice.actions;
 export const clientReducer = clientSlice.reducer;

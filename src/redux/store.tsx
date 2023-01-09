@@ -1,20 +1,49 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { clientReducer } from './client/clientSlice';
 import createSagaMiddleware from '@redux-saga/core';
-import userSagas from './client/clientSagas';
+import storage from 'redux-persist/lib/storage';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE
+} from 'redux-persist';
+import clientSagas from './client/clientSagas';
 
+const rootPersistConfig = {
+  key: 'root',
+  storage
+};
+const clientPersistConfig = {
+  key: 'clientReducer',
+  storage,
+  whitelist: ['client']
+};
+
+const rootReducer = combineReducers({
+  clientReducer: persistReducer(clientPersistConfig, clientReducer)
+});
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
-  reducer: {
-    clientReducer
-  },
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware => {
-    return getDefaultMiddleware().concat(sagaMiddleware, logger);
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    }).concat(sagaMiddleware, logger);
   }
 });
 
-sagaMiddleware.run(userSagas);
+export const persistor = persistStore(store);
+
+sagaMiddleware.run(clientSagas);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

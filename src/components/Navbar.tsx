@@ -1,15 +1,25 @@
-import React from 'react';
+import { is } from 'immer/dist/internal';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { selectStatus } from '../redux/client/clientSlice';
-import { signout } from '../redux/client/clientSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { selectCurrentClient, selectStatus } from '../redux/client/clientSlice';
+import { clientSignout } from '../redux/client/clientSlice';
 type NavbarProps = {
   // add any props that your Navbar component needs here
 };
 
 const Navbar: React.FC<NavbarProps> = props => {
+  const client = useSelector(selectCurrentClient);
   const status = useSelector(selectStatus);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!status || !client) {
+      navigate('/client/signin');
+    }
+  }, [client, status]);
+
   return (
     <nav className="bg-gray-800 p-4">
       <ul className="flex justify-between items-center">
@@ -47,18 +57,15 @@ const Navbar: React.FC<NavbarProps> = props => {
                 Home
               </Link>
             </li>
-            <li
-              className="text-white font-bold uppercase tracking-wide"
-              onClick={() => {
-                dispatch(signout());
-              }}
-            >
-              <Link
-                to="/client/signin"
+            <li className="text-white font-bold uppercase tracking-wide">
+              <p
+                onClick={() => {
+                  dispatch(clientSignout());
+                }}
                 className="text-white hover:text-gray-400"
               >
                 sign out
-              </Link>
+              </p>
             </li>
           </>
         )}
