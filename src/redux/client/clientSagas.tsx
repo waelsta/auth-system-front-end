@@ -1,8 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { IClient } from '../../types/client';
+import { IClientData, IClientSignup } from '../../types/client';
 import {
   getClientData,
-  clientSignInFail,
   clientSignInSuccess,
   getClientDataSuccess,
   clientSignUpSuccess,
@@ -11,26 +10,22 @@ import {
   displayAlert,
   removeAlert
 } from './clientSlice';
+
 import {
   axiosGetClientData,
   axiosSignIn,
   axiosClientSignUp
 } from '../../utils/axios-config';
-//interfaces
-interface IAction {
-  type: string;
-  payload: any;
-}
+import { PayloadAction } from '@reduxjs/toolkit';
 
 const delay = (time: number) =>
   new Promise(resolve => setTimeout(resolve, time));
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
-  let client;
   try {
-    client = yield call(axiosGetClientData);
-    yield put(getClientDataSuccess(client));
+    const response = yield call(axiosGetClientData);
+    yield put(getClientDataSuccess(response));
   } catch (err: any) {
     err.response?.data
       ? yield put(getClientDataFail(err.response?.data))
@@ -39,7 +34,9 @@ function* callGetClientData(): Generator<any> {
 }
 
 //client sign in generator function
-function* callClientSignIn(action: IAction): Generator<any> {
+function* callClientSignIn(
+  action: PayloadAction<{ email: string; password: string }>
+): Generator<any> {
   const { email, password } = action.payload;
   try {
     yield call(axiosSignIn, { email, password });
@@ -54,37 +51,17 @@ function* callClientSignIn(action: IAction): Generator<any> {
 }
 
 //client sign up generator function
-function* callClientSignUp(action: IAction): Generator<any> {
-  const {
-    firstName: first_name,
-    lastName: last_name,
-    email,
-    password,
-    city,
-    street,
-    phone: phone_number,
-    passwordMatch: password_match
-  } = action.payload;
-  const client: IClient = {
-    first_name,
-    last_name,
-    email,
-    password,
-    city,
-    street,
-    phone_number,
-    password_match
-  };
-
+function* callClientSignUp(
+  action: PayloadAction<IClientSignup>
+): Generator<any> {
+  const client = action.payload;
   try {
     const message: any = yield call(axiosClientSignUp, client);
-    console.log(message);
     yield put(clientSignUpSuccess({ client, message: message.data }));
     yield put(displayAlert());
     yield call(delay, 2000);
     yield put(removeAlert());
   } catch (err: any) {
-    console.log(err);
     yield put(clientSignUpFail(err.message));
     yield put(displayAlert());
     yield call(delay, 2000);

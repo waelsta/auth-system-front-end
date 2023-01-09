@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentClient } from '../../redux/client/clientSlice';
-import { IClient } from '../../types/client';
+import { selectCurrentClient } from '../../redux/client/ClientSelectors';
 import { classicButtonStyles } from '../../styles/common-styles';
 const ClientHomepage: React.FC = () => {
-  const client: IClient | null = useSelector(selectCurrentClient);
+  const client = useSelector(selectCurrentClient);
   return (
     <div className="bg-gray-200 p-4 h-full grid self-center">
       <h1 className="text-2xl font-bold text-gray-700">

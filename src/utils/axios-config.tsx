@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IClient } from '../types/client';
+import { IClientData, IClientSignup } from '../types/client';
 
 interface ISignindata {
   email: string;
@@ -12,6 +12,7 @@ const API_URL = 'http://localhost:5000/api/v1';
 const axiosClient = axios.create({
   baseURL: API_URL
 });
+
 //axios sign in function
 export const axiosSignIn = async (data: ISignindata) => {
   const { email, password } = data;
@@ -33,7 +34,7 @@ export const axiosSignIn = async (data: ISignindata) => {
 };
 
 //axios client sign up call
-export const axiosClientSignUp = async (client: IClient) => {
+export const axiosClientSignUp = async (client: IClientSignup) => {
   try {
     return await axiosClient.post('/auth/client/signup', client, {
       withCredentials: true
@@ -47,12 +48,12 @@ export const axiosClientSignUp = async (client: IClient) => {
   }
 };
 
-export const axiosGetClientData = async () => {
+export const axiosGetClientData = async (): Promise<IClientData> => {
   try {
-    const client = await axiosClient.get('/client', {
+    const { data } = await axiosClient.get<IClientData>('/client', {
       withCredentials: true
     });
-    return client;
+    return data;
   } catch (err: any) {
     if (err.response) {
       throw new Error(err.response.data.error);

@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface IAlert {
   error: boolean | null;
-  message: string;
+  message: string | null;
 }
 
 const Alert: React.FC<IAlert> = (props: IAlert) => {

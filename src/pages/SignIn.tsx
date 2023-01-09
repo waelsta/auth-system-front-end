@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import {
-  clientSignIn,
-  selectStatus,
   selectResponse,
-  selectShowAlert
-} from '../redux/client/clientSlice';
+  selectShowAlert,
+  selectStatus
+} from '../redux/client/ClientSelectors';
+import { clientSignIn } from '../redux/client/clientSlice';
 import {
   classicButtonStyles,
   formStyles,
@@ -28,9 +28,9 @@ const SignIn: React.FC = () => {
     const name = e.target.name;
     setCredentials({ ...Credentials, [name]: value });
   };
-  {
-    status && navigate('/client/home');
-  }
+
+  status && navigate('/client/home');
+
   return (
     <div className="h-screen">
       <div className={formStyles}>

@@ -1,26 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-export const selectCurrentClient = (state: RootState) =>
-  state.clientReducer.client;
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IClientData } from '../../types/client';
 
-export const selectResponse = (state: RootState) => ({
-  error: state.clientReducer.error,
-  message: state.clientReducer.message
-});
-export const selectShowAlert = (state: RootState) =>
-  state.clientReducer.displayAlert;
-export const selectStatus = (state: RootState) =>
-  state.clientReducer.isLoggedIn;
+interface clientInitialState {
+  displayAlert: boolean;
+  isLoggedIn: boolean;
+  isFetching: boolean;
+  error: boolean;
+  client: IClientData | null;
+  message: string | null;
+}
+
+const initialState: clientInitialState = {
+  displayAlert: false,
+  isLoggedIn: false,
+  isFetching: false,
+  error: false,
+  client: null,
+  message: null
+};
+
 const clientSlice = createSlice({
   name: 'clientReducer',
-  initialState: {
-    displayAlert: false,
-    isLoggedIn: false,
-    isFetching: false,
-    error: false,
-    client: null,
-    message: ''
-  },
+  initialState,
   reducers: {
     clientSignIn: (state, action) => {
       state.isFetching = true;
@@ -62,7 +63,7 @@ const clientSlice = createSlice({
       state.isFetching = false;
       state.error = false;
       state.isLoggedIn = true;
-      state.client = action.payload.data;
+      state.client = action.payload;
     },
     getClientDataFail: (state, action) => {
       state.isFetching = false;

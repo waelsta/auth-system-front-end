@@ -1,11 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
-import {
-  clientSignUp,
-  selectCurrentClient,
-  selectResponse,
-  selectShowAlert
-} from '../redux/client/clientSlice';
+import { clientSignUp } from '../redux/client/clientSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   classicButtonStyles,
@@ -15,6 +10,10 @@ import {
   formStyles
 } from '../styles/common-styles';
 import Alert, { IAlert } from './Alert';
+import {
+  selectResponse,
+  selectShowAlert
+} from '../redux/client/ClientSelectors';
 
 const SignUpForm: React.FC = () => {
   const showAlert: boolean = useSelector(selectShowAlert);
