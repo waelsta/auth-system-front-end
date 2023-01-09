@@ -1,32 +1,34 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { IClientSignUp } from '../../types/client';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { IClientSignup } from '../../types/client';
 import {
   getClientData,
-  clientSignInFail,
   clientSignInSuccess,
   getClientDataSuccess,
   clientSignUpSuccess,
   getClientDataFail,
   clientSignUpFail,
   clientSignoutSuccess,
-  clientSignoutFail
+  clientSignoutFail,
+  clientSignInFail
 } from './clientSlice';
+
 import {
   axiosGetClientData,
   axiosSignIn,
   axiosClientSignUp,
   axiosClientSignout
 } from '../../utils/axios-config';
+import { PayloadAction } from '@reduxjs/toolkit';
 import showAlert from '../../utils/showAlert';
+
+const delay = (time: number) =>
+  new Promise(resolve => setTimeout(resolve, time));
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
-  let client: any;
   try {
-    client = yield call(axiosGetClientData);
-    console.log(client);
-    yield put(getClientDataSuccess(client.data));
+    const response = yield call(axiosGetClientData);
+    yield put(getClientDataSuccess(response));
   } catch (err: any) {
     err.response?.data
       ? yield put(getClientDataFail(err.response?.data))
@@ -51,15 +53,14 @@ function* callClientSignIn(
 
 //client sign up generator function
 function* callClientSignUp(
-  action: PayloadAction<IClientSignUp>
+  action: PayloadAction<IClientSignup>
 ): Generator<any> {
-  const client: IClientSignUp = action.payload;
+  const client = action.payload;
   try {
     const message: any = yield call(axiosClientSignUp, client);
     yield put(clientSignUpSuccess({ client, message: message.data }));
     yield call(showAlert);
   } catch (err: any) {
-    console.log(err);
     yield put(clientSignUpFail(err.message));
     yield call(showAlert);
   }

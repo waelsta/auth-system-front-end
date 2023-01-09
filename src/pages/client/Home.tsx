@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import {
   selectCurrentClient,
   selectStatus
-} from '../../redux/client/clientSlice';
-import { IClient } from '../../types/client';
+} from '../../redux/client/ClientSelectors';
 import { classicButtonStyles } from '../../styles/common-styles';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 const ClientHomepage: React.FC = () => {
-  const client: IClient | null = useSelector(selectCurrentClient);
+  const client = useSelector(selectCurrentClient);
   const status: boolean = useSelector(selectStatus);
   const navigate = useNavigate();
   useEffect(() => {

@@ -1,38 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { IClient } from '../../types/client';
-import { RootState } from '../store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IClientData } from '../../types/client';
 
-//interface
-interface IclientReducerState {
+interface clientInitialState {
   displayAlert: boolean;
   isLoggedIn: boolean;
   isFetching: boolean;
   error: boolean;
-  client: IClient | null;
-  message: string;
+  client: IClientData | null;
+  message: string | null;
 }
-const initialState: IclientReducerState = {
+
+const initialState: clientInitialState = {
   displayAlert: false,
   isLoggedIn: false,
   isFetching: false,
   error: false,
   client: null,
-  message: ''
+  message: null
 };
-//selectors
-export const selectCurrentClient = (state: RootState) =>
-  state.clientReducer.client;
 
-export const selectResponse = (state: RootState) => ({
-  error: state.clientReducer.error,
-  message: state.clientReducer.message
-});
-export const selectShowAlert = (state: RootState) =>
-  state.clientReducer.displayAlert;
-export const selectStatus = (state: RootState) =>
-  state.clientReducer.isLoggedIn;
-
-//slice
 const clientSlice = createSlice({
   name: 'clientReducer',
   initialState,
