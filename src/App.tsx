@@ -5,6 +5,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ClientHomepage from './pages/client/Home';
 import NavBar from './components/navbar/Navbar';
+import ProfilePictureUpload from './pages/ProfilePictureUpload';
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/client/signup" element={<SignUp />} />
         <Route path="/client/home" element={<ClientHomepage />} />
+        <Route
+          path="/uploads/profile_picture"
+          element={<ProfilePictureUpload />}
+        />
       </Routes>
     </div>
   );

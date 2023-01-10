@@ -74,3 +74,14 @@ export const axiosClientSignout = async () => {
     throw new Error(err.message);
   }
 };
+
+export const axiosClientProfilePictureUpload = async () => {
+  try {
+    return await axiosClient.post('/client/uploads/profile-picture');
+  } catch (err: any) {
+    if (err.response) {
+      throw new Error(err.response.data.error);
+    }
+    throw new Error(err.message);
+  }
+};

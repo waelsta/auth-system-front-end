@@ -5,6 +5,8 @@ export interface IClientSignup {
   street: string;
   email: string;
   city: string;
+  password: string;
+  password_match: string;
 }
 
 // client sign up data
@@ -19,4 +21,5 @@ export interface IClient {
   phone_number: number;
   is_client: boolean;
   profile_picture_url: string;
+  profile_picture: File;
 }

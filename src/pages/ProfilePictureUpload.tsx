@@ -1,36 +1,43 @@
+import path from 'path';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentClient } from '../redux/client/ClientSelectors';
+import { clientProfilePictureUpload } from '../redux/client/clientSlice';
 import { IClient } from '../types/client';
 
 const ProfilePictureUpload = () => {
   const user: IClient | null = useSelector(selectCurrentClient);
-
+  let pfp_url = '';
+  let pfp: File | null = null;
   const pictureSelectedHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log(file);
-    // if (file && user) {
-    //   user.profile_picture = file;
-    // }
+    if (file && user) {
+      pfp = file;
+      pfp_url = URL.createObjectURL(file);
+    }
   };
+
   const dispatch = useDispatch();
   const pictureUploadHandler = () => {
     if (user) {
       const formData = new FormData();
-      formData.append('profile_picture', user.profile_picture_url);
-      dispatch(clientUpdateProfilePicture(formData));
+      console.log(pfp, '     ', pfp_url);
+      pfp
+        ? formData.append('profile_picture', pfp)
+        : formData.append('profile_picture', '');
+      dispatch(clientProfilePictureUpload({ pfp: { ...formData }, pfp_url }));
     }
   };
   return (
     <div>
       <label
-        onChange={() => pictureSelectedHandler}
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         htmlFor="file_input"
       >
         Upload file
       </label>
       <input
+        onChange={pictureSelectedHandler}
         className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         aria-describedby="file_input_help"
         id="file_input"
@@ -48,7 +55,3 @@ const ProfilePictureUpload = () => {
 };
 
 export default ProfilePictureUpload;
-
-function clientUpdateProfilePicture(formData: FormData): any {
-  throw new Error('Function not implemented.');
-}

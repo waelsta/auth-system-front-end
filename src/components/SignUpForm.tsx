@@ -11,15 +11,21 @@ import {
 } from '../styles/common-styles';
 import Alert, { IAlert } from './Alert';
 import {
+  selectCurrentClient,
+  selectIsSignedUp,
   selectResponse,
   selectShowAlert
 } from '../redux/client/ClientSelectors';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IClient } from '../types/client';
 
 const SignUpForm: React.FC = () => {
   const showAlert: boolean = useSelector(selectShowAlert);
+  const isFirstTime: boolean = useSelector(selectIsSignedUp);
   const response: IAlert | null = useSelector(selectResponse);
   const dispatch = useDispatch();
-
+  const client: IClient | null = useSelector(selectCurrentClient);
   const cities = [
     'ariana',
     'beja',
@@ -57,6 +63,7 @@ const SignUpForm: React.FC = () => {
     city: '',
     phone_number: ''
   };
+  const navigate = useNavigate();
 
   // form validation schema
   const validationSchema = yup.object().shape({
@@ -121,6 +128,11 @@ const SignUpForm: React.FC = () => {
       })
       .required('phone number required')
   });
+  useEffect(() => {
+    if (isFirstTime && client) {
+      navigate('/uploads/profile_picture');
+    }
+  }, [isFirstTime, client]);
 
   return (
     <>

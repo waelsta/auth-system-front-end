@@ -8,6 +8,7 @@ interface clientInitialState {
   error: boolean;
   client: IClient | null;
   message: string | null;
+  isFirstTime: boolean;
 }
 
 const initialState: clientInitialState = {
@@ -16,7 +17,8 @@ const initialState: clientInitialState = {
   isFetching: false,
   error: false,
   client: null,
-  message: null
+  message: null,
+  isFirstTime: false
 };
 
 const clientSlice = createSlice({
@@ -44,6 +46,7 @@ const clientSlice = createSlice({
       state.message = action.payload.message.data;
       state.client = action.payload.client;
       state.error = false;
+      state.isFirstTime = true;
     },
     clientSignUpFail: (state, action) => {
       state.isFetching = false;
@@ -78,6 +81,22 @@ const clientSlice = createSlice({
     },
     clientSignoutFail: (state, action) => {
       state.isFetching = false;
+      state.error = true;
+      state.message = action.payload;
+    },
+    clientProfilePictureUpload: (state, action) => {
+      state.isFetching = true;
+    },
+    clientProfilePictureUploadSuccess: (state, action) => {
+      state.isFetching = false;
+      state.client!.profile_picture = action.payload.pfp;
+      state.client!.profile_picture_url = action.payload.pfp_url;
+      state.isFirstTime = false;
+    },
+    clientProfilePictureUploadFail: (state, action) => {
+      state.isFetching = false;
+      state.error = true;
+      state.message = action.payload;
     }
   }
 });
@@ -96,6 +115,9 @@ export const {
   removeAlert,
   clientSignout,
   clientSignoutSuccess,
-  clientSignoutFail
+  clientSignoutFail,
+  clientProfilePictureUploadSuccess,
+  clientProfilePictureUploadFail,
+  clientProfilePictureUpload
 } = clientSlice.actions;
 export const clientReducer = clientSlice.reducer;

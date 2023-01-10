@@ -9,20 +9,21 @@ import {
   clientSignUpFail,
   clientSignoutSuccess,
   clientSignoutFail,
-  clientSignInFail
+  clientSignInFail,
+  clientProfilePictureUploadSuccess,
+  clientProfilePictureUploadFail,
+  clientSignIn
 } from './clientSlice';
 
 import {
   axiosGetClientData,
   axiosSignIn,
   axiosClientSignUp,
-  axiosClientSignout
+  axiosClientSignout,
+  axiosClientProfilePictureUpload
 } from '../../utils/axios-config';
 import { PayloadAction } from '@reduxjs/toolkit';
 import showAlert from '../../utils/showAlert';
-
-const delay = (time: number) =>
-  new Promise(resolve => setTimeout(resolve, time));
 
 //get user data generator function
 function* callGetClientData(): Generator<any> {
@@ -59,6 +60,7 @@ function* callClientSignUp(
   try {
     const message: any = yield call(axiosClientSignUp, client);
     yield put(clientSignUpSuccess({ client, message: message.data }));
+    yield put(clientSignIn({ email: client.email, password: client.password }));
     yield call(showAlert);
   } catch (err: any) {
     yield put(clientSignUpFail(err.message));
@@ -66,10 +68,21 @@ function* callClientSignUp(
   }
 }
 
+//client profile picture upload generator function
+function* callClientProfilePictureUpload(): Generator<any> {
+  try {
+    const response = yield call(axiosClientProfilePictureUpload);
+    yield put(clientProfilePictureUploadSuccess(response));
+  } catch (error: any) {
+    yield put(clientProfilePictureUploadFail(error.message));
+    yield call(showAlert);
+  }
+}
+
+//client sign out generator function
 function* callClientSignout(): Generator<any> {
   try {
-    const message = yield call(axiosClientSignout);
-    console.log(message);
+    yield call(axiosClientSignout);
     yield put(clientSignoutSuccess());
   } catch (error: any) {
     yield put(clientSignoutFail(error.message));
@@ -94,12 +107,20 @@ function* onClientSignout() {
   yield takeLatest('clientReducer/clientSignout', callClientSignout);
 }
 
+function* onClientProfilePictureUpload() {
+  yield takeLatest(
+    'clientReducer/clientProfilePictureUpload',
+    callClientProfilePictureUpload
+  );
+}
+
 //call all client sagas
 export default function* clientSagas() {
   yield all([
     call(onClientSignIn),
     call(onGetClientData),
     call(onClientSignUp),
-    call(onClientSignout)
+    call(onClientSignout),
+    call(onClientProfilePictureUpload)
   ]);
 }
