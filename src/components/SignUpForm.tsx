@@ -48,20 +48,26 @@ const SignUpForm: React.FC = () => {
   ];
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
-    passwordMatch: '',
+    password_match: '',
     street: '',
     city: '',
-    phone: ''
+    phone_number: ''
   };
 
   // form validation schema
   const validationSchema = yup.object().shape({
-    firstName: yup.string().min(3, 'minimum length is 3').required(),
-    lastName: yup.string().min(3, 'minimum length is 3').required(),
+    first_name: yup
+      .string()
+      .min(3, 'minimum length is 3')
+      .required('first name required'),
+    last_name: yup
+      .string()
+      .min(3, 'minimum length is 3')
+      .required('last name required'),
     password: yup
       .string()
       .min(8, 'minimum number of characters is 8')
@@ -77,11 +83,11 @@ const SignUpForm: React.FC = () => {
           return false;
         }
       )
-      .required(),
-    passwordMatch: yup
+      .required('password required'),
+    password_match: yup
       .string()
       .oneOf([yup.ref('password')], 'your password does not match')
-      .required(),
+      .required('password confirmation required'),
     city: yup
       .string()
       .test('invalidCity', 'please choose a city from the list', value => {
@@ -90,7 +96,7 @@ const SignUpForm: React.FC = () => {
         }
         return false;
       })
-      .required(),
+      .required('city required'),
     street: yup.string().min(3, 'minimum length is 3').required(),
     email: yup
       .string()
@@ -101,8 +107,8 @@ const SignUpForm: React.FC = () => {
         }
         return false;
       })
-      .required(),
-    phone: yup
+      .required('email required'),
+    phone_number: yup
       .string()
       .min(8, 'must have 8 digits')
       .test('isValideNumber', 'please enter an 8 digits number', value => {
@@ -113,7 +119,7 @@ const SignUpForm: React.FC = () => {
           return false;
         }
       })
-      .required()
+      .required('phone number required')
   });
 
   return (
@@ -133,36 +139,36 @@ const SignUpForm: React.FC = () => {
               <Alert message={response?.message} error={response?.error} />
             )}
             <div className="">
-              <label className={labelStyles} htmlFor="firstName : ">
+              <label className={labelStyles} htmlFor="first_name : ">
                 First name :
               </label>
               <Field
                 className={inputFieldStyles}
                 type="text"
-                name="firstName"
+                name="first_name"
                 onChange={props.handleChange}
               />
               <ErrorMessage
                 className={errorMessageStyles}
                 component="div"
-                name="firstName"
+                name="first_name"
               />
             </div>
 
             <div>
-              <label className={labelStyles} htmlFor="lastName">
+              <label className={labelStyles} htmlFor="last_name">
                 Last name :{' '}
               </label>
               <Field
                 className={inputFieldStyles}
                 type="text"
-                name="lastName"
+                name="last_name"
                 onChange={props.handleChange}
               />
               <ErrorMessage
                 className={errorMessageStyles}
                 component="div"
-                name="lastName"
+                name="lasst_name"
               />
             </div>
 
@@ -201,36 +207,36 @@ const SignUpForm: React.FC = () => {
             </div>
 
             <div>
-              <label className={labelStyles} htmlFor="passwordMatch">
+              <label className={labelStyles} htmlFor="password_match">
                 Retype password :{' '}
               </label>
               <Field
                 className={inputFieldStyles}
                 type="password"
-                name="passwordMatch"
+                name="password_match"
                 onChange={props.handleChange}
               />
               <ErrorMessage
                 className={errorMessageStyles}
                 component="div"
-                name="passwordMatch"
+                name="password_match"
               />
             </div>
 
             <div>
-              <label className={labelStyles} htmlFor="phone">
+              <label className={labelStyles} htmlFor="phone_number">
                 Phone Number :{' '}
               </label>
               <Field
                 className={inputFieldStyles}
                 type="tel"
-                name="phone"
+                name="phone_number"
                 onChange={props.handleChange}
               />
               <ErrorMessage
                 className={errorMessageStyles}
                 component="div"
-                name="phone"
+                name="phone_number"
               />
             </div>
 

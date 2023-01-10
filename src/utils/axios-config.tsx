@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IClientData, IClientSignup } from '../types/client';
+import { IClient, IClientSignup } from '../types/client';
 
 interface ISignindata {
   email: string;
@@ -48,9 +48,9 @@ export const axiosClientSignUp = async (client: IClientSignup) => {
   }
 };
 
-export const axiosGetClientData = async (): Promise<IClientData> => {
+export const axiosGetClientData = async (): Promise<IClient> => {
   try {
-    const { data } = await axiosClient.get<IClientData>('/client', {
+    const { data } = await axiosClient.get<IClient>('/client', {
       withCredentials: true
     });
     return data;

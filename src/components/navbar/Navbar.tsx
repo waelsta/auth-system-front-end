@@ -32,7 +32,7 @@ const NewNavbar: React.FC = () => {
         <Profile
           email={client?.email}
           firstName={client?.first_name}
-          image={client?.image_url}
+          image={client?.profile_picture_url}
         />
       ) : (
         ''

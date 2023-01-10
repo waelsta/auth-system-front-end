@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IClientData } from '../../types/client';
+import { IClient } from '../../types/client';
 
 interface clientInitialState {
   displayAlert: boolean;
   isLoggedIn: boolean;
   isFetching: boolean;
   error: boolean;
-  client: IClientData | null;
+  client: IClient | null;
   message: string | null;
 }
 

@@ -8,7 +8,7 @@ export interface IClientSignup {
 }
 
 // client sign up data
-export interface IClientData {
+export interface IClient {
   id: string;
   createdAt: Date;
   email: string;
@@ -18,5 +18,5 @@ export interface IClientData {
   street: string;
   phone_number: number;
   is_client: boolean;
-  image_url: string;
+  profile_picture_url: string;
 }
