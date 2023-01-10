@@ -22,7 +22,7 @@ const NewNavbar: React.FC = () => {
   }, [client, status]);
 
   return (
-    <Navbar className="sticky top-0" fluid={true} rounded={true}>
+    <Navbar className="sticky top-0 bg-[#9900FF]" fluid={true} rounded={true}>
       <Logo
         name="Services"
         image="https://flowbite.com/docs/images/logo.svg"

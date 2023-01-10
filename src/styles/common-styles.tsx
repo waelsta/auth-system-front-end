@@ -1,6 +1,7 @@
 export const inputFieldStyles =
-  'w-full py-2 px-3 bg-gray-200 rounded-md text-gray-700 focus:outline-none focus:shadow-outline-blue focus:border-blue-300';
-export const labelStyles = 'block font-bold text-gray-700 mb-2';
+  'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+export const labelStyles =
+  'block mb-2 text-sm font-medium text-gray-900 dark:text-white';
 export const classicButtonStyles =
   'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-8';
 export const errorMessageStyles = 'text-red-500 text-sm';
