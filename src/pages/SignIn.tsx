@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import {
-  clientSignIn,
-  selectStatus,
   selectResponse,
-  selectShowAlert
-} from '../redux/client/clientSlice';
+  selectShowAlert,
+  selectStatus
+} from '../redux/client/ClientSelectors';
+import { clientSignIn } from '../redux/client/clientSlice';
 import {
   classicButtonStyles,
   formStyles,
