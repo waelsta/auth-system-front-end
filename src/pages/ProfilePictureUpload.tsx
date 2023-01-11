@@ -29,7 +29,7 @@ const ProfilePictureUpload = () => {
     }
   };
   return (
-    <div>
+    <div id="picture-upload-page">
       <label
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         htmlFor="file_input"

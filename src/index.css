@@ -7,7 +7,35 @@ html {
 }
 
 #signup-page {
-  background-image: url('../public/dark-bg-1.png');
+  background-image: url('../public/app-backgrounds/light/bg-light-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#landing-page {
+  background-image: url('../public/app-backgrounds/light/bg-light-1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#sign-in-page {
+  background-image: url('../public/app-backgrounds/light/bg-light-3.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.App {
+  background-image: url('../public/app-backgrounds/light/bg-light-5.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#home-page {
+  background-image: url('../public/app-backgrounds/light/bg-light-4.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

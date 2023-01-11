@@ -146,7 +146,7 @@ const SignUp: React.FC = () => {
     >
       {(props: FormikProps<any>) => (
         <div id="signup-page" className="h-screen p-12">
-          <Form className="w-7/12 mx-auto bg-white/30 backdrop-blur-xl p-5 rounded-md my-20">
+          <Form className="w-7/12 mx-auto bg-white/40 backdrop-blur-xl p-5 rounded-md my-20 shadow-2xl">
             {showAlert && (
               <Alert message={response?.message} error={response?.error} />
             )}
