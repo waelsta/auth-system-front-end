@@ -1,7 +1,12 @@
-import path from 'path';
-import React from 'react';
+import Alert from '../components/Alert';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentClient } from '../redux/client/ClientSelectors';
+import { IAlert } from '../components/Alert';
+import {
+  selectCurrentClient,
+  selectResponse,
+  selectShowAlert
+} from '../redux/client/ClientSelectors';
 import { clientProfilePictureUpload } from '../redux/client/clientSlice';
 import { IClient } from '../types/client';
 
@@ -16,6 +21,13 @@ const ProfilePictureUpload = () => {
       pfp_url = URL.createObjectURL(file);
     }
   };
+  const showAlert: boolean = useSelector(selectShowAlert);
+  const response: IAlert | null = useSelector(selectResponse);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (showAlert) setShow(true);
+    else setShow(false);
+  }, [showAlert]);
 
   const dispatch = useDispatch();
   const pictureUploadHandler = () => {
@@ -29,7 +41,8 @@ const ProfilePictureUpload = () => {
     }
   };
   return (
-    <div id="picture-upload-page">
+    <div id="picture-upload-page" className="h-screen p-10">
+      {show && <Alert message={response?.message} error={response?.error} />}
       <label
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         htmlFor="file_input"
