@@ -11,15 +11,8 @@ import {
 } from '../../redux/client/ClientSelectors';
 
 const NewNavbar: React.FC = () => {
-  const navigate = useNavigate();
   const status = useSelector(selectStatus);
   const client = useSelector(selectCurrentClient);
-
-  useEffect(() => {
-    if (!status || !client) {
-      navigate('/client/signin');
-    }
-  }, [client, status]);
 
   return (
     <Navbar className="sticky top-0 bg-[#9900FF]" fluid={true} rounded={true}>

@@ -14,6 +14,7 @@ import {
   REHYDRATE
 } from 'redux-persist';
 import clientSagas from './client/clientSagas';
+import { uiReducer } from './ui/uiSlice';
 
 const rootPersistConfig = {
   key: 'root',
@@ -25,9 +26,17 @@ const clientPersistConfig = {
   whitelist: ['client']
 };
 
+const uiPersistConfig = {
+  key: 'uiReducer',
+  storage,
+  blacklist: ['uiReducer']
+};
+
 const rootReducer = combineReducers({
-  clientReducer: persistReducer(clientPersistConfig, clientReducer)
+  clientReducer: persistReducer(clientPersistConfig, clientReducer),
+  uiReducer: persistReducer(uiPersistConfig, uiReducer)
 });
+
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 const sagaMiddleware = createSagaMiddleware();
 

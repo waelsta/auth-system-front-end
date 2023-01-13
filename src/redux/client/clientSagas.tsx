@@ -69,9 +69,14 @@ function* callClientSignUp(
 }
 
 //client profile picture upload generator function
-function* callClientProfilePictureUpload(): Generator<any> {
+function* callClientProfilePictureUpload(
+  action: PayloadAction<string>
+): Generator<any> {
   try {
-    const response = yield call(axiosClientProfilePictureUpload);
+    const response = yield call(
+      axiosClientProfilePictureUpload,
+      action.payload
+    );
     yield put(clientProfilePictureUploadSuccess(response));
   } catch (error: any) {
     yield put(clientProfilePictureUploadFail(error.message));
