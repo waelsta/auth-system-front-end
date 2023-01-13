@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clientSignout } from '../../redux/client/clientSlice';
 import { setEndpoint, ToggleState } from '../../redux/ui/uiSlice';
-// import { openModal, setModalRoute } from '../../redux/ui/uiSlice';
 
 const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
   const { isLoggedIn } = props;
@@ -13,13 +12,6 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
 
   return (
     <Navbar.Collapse>
-      <Navbar.Link className="cursor-pointer" onClick={() => navigate('/')}>
-        Home
-      </Navbar.Link>
-      <Navbar.Link className="cursor-pointer" onClick={() => navigate('/')}>
-        Services
-      </Navbar.Link>
-
       {isLoggedIn ? (
         <>
           <Navbar.Link

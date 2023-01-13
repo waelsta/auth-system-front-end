@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectEndpoint, selectModalState } from '../redux/ui/uiSelectors';
@@ -14,21 +14,36 @@ const UserTypeModal: React.FC = () => {
 
   const handleClick = (user: string) => {
     dispatch(setParam(user));
-    navigate(route);
-    dispatch(ToggleState());
+    if (route === 'signup') {
+      navigate(`${user}/${route}`);
+      dispatch(ToggleState());
+    } else {
+      navigate(route);
+      dispatch(ToggleState());
+    }
   };
 
   return (
     <div>
       <React.Fragment>
         <Modal show={modalState} size="xl">
+          <Modal.Header onClick={() => dispatch(ToggleState())}>
+            <h4>Choose your user type</h4>
+          </Modal.Header>
           <Modal.Body>
-            <div className="space-y-6 p-6">
-              <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                Select your user type:
-              </p>
-              <Button onClick={() => handleClick('client')}> Client</Button>
-              <Button onClick={() => handleClick('employee')}>Employee</Button>
+            <div className="space-y-6 p-6 flex flex-col items-center">
+              <button
+                className="w-10/12 shadow-md bg-[#3F83F7] hover:bg-[#3F89F7] font:bold rounded-sm text-left p-5 text-white flex justify-between"
+                onClick={() => handleClick('client')}
+              >
+                <p>Client</p>
+              </button>
+              <button
+                className="w-10/12 shadow-md bg-[#3F83F7] hover:bg-[#3F89F7] font:bold rounded-sm text-left p-5 text-white flex justify-between"
+                onClick={() => handleClick('employee')}
+              >
+                Employee
+              </button>
             </div>
           </Modal.Body>
         </Modal>
