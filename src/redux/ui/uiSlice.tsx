@@ -4,32 +4,27 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     modalState: false,
-    modalRoute: '/'
+    modalEndpoint: '',
+    modalParam: ''
   },
   reducers: {
-    openModal: state => {
-      state.modalState = true;
+    setEndpoint: (state, action) => {
+      state.modalEndpoint = action.payload;
     },
-    closeModal: state => {
-      state.modalState = false;
+    setParam: (state, action) => {
+      state.modalParam = action.payload;
     },
-    toggleModal: state => {
+    ToggleState: state => {
       state.modalState = !state.modalState;
     },
-    setModalRoute: (state, action) => {
-      state.modalRoute = action.payload;
-    },
-    clearModalRoute: state => {
-      state.modalRoute = '/';
+    resetModal: state => {
+      state.modalState = false;
+      state.modalEndpoint = '';
+      state.modalParam = '';
     }
   }
 });
 
-export const {
-  openModal,
-  closeModal,
-  toggleModal,
-  setModalRoute,
-  clearModalRoute
-} = uiSlice.actions;
+export const { setEndpoint, setParam, ToggleState, resetModal } =
+  uiSlice.actions;
 export const uiReducer = uiSlice.reducer;

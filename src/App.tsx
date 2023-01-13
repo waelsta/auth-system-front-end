@@ -14,8 +14,7 @@ function App() {
       <NavBar />
       <UserTypeModal />
       <Routes>
-        <Route path="/signin/client" element={<SignIn />} />
-        <Route path="/signin/employee" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Landing />} />
         <Route path="/client/signup" element={<SignUp />} />
         <Route path="/client/home" element={<ClientHomepage />} />

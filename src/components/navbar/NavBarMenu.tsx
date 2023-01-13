@@ -3,7 +3,8 @@ import { Navbar } from 'flowbite-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clientSignout } from '../../redux/client/clientSlice';
-import { openModal, setModalRoute } from '../../redux/ui/uiSlice';
+import { setEndpoint, ToggleState } from '../../redux/ui/uiSlice';
+// import { openModal, setModalRoute } from '../../redux/ui/uiSlice';
 
 const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
   const { isLoggedIn } = props;
@@ -46,8 +47,8 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
         <Navbar.Link
           className="cursor-pointer"
           onClick={() => {
-            dispatch(openModal());
-            dispatch(setModalRoute('/signin'));
+            dispatch(setEndpoint('signin'));
+            dispatch(ToggleState());
           }}
         >
           Sign in
@@ -58,7 +59,10 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
       ) : (
         <Navbar.Link
           className="cursor-pointer"
-          onClick={() => navigate('/client/signup')}
+          onClick={() => {
+            dispatch(setEndpoint('signup'));
+            dispatch(ToggleState());
+          }}
         >
           Sign up
         </Navbar.Link>
