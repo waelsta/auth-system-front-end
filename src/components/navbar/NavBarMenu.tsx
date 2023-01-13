@@ -3,20 +3,15 @@ import { Navbar } from 'flowbite-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clientSignout } from '../../redux/client/clientSlice';
+import { setEndpoint, ToggleState } from '../../redux/ui/uiSlice';
 
 const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
   const { isLoggedIn } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   return (
     <Navbar.Collapse>
-      <Navbar.Link className="cursor-pointer" onClick={() => navigate('/')}>
-        Home
-      </Navbar.Link>
-      <Navbar.Link className="cursor-pointer" onClick={() => navigate('/')}>
-        Services
-      </Navbar.Link>
-
       {isLoggedIn ? (
         <>
           <Navbar.Link
@@ -43,7 +38,10 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
       ) : (
         <Navbar.Link
           className="cursor-pointer"
-          onClick={() => navigate('/client/signin')}
+          onClick={() => {
+            dispatch(setEndpoint('signin'));
+            dispatch(ToggleState());
+          }}
         >
           Sign in
         </Navbar.Link>
@@ -53,7 +51,10 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
       ) : (
         <Navbar.Link
           className="cursor-pointer"
-          onClick={() => navigate('/client/signup')}
+          onClick={() => {
+            dispatch(setEndpoint('signup'));
+            dispatch(ToggleState());
+          }}
         >
           Sign up
         </Navbar.Link>

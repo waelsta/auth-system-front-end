@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,8 @@ import {
   selectStatus
 } from '../redux/client/ClientSelectors';
 import { clientSignIn } from '../redux/client/clientSlice';
+import { selectFullRoute } from '../redux/ui/uiSelectors';
+import { resetModal } from '../redux/ui/uiSlice';
 import {
   classicButtonStyles,
   formStyles,
@@ -29,6 +31,20 @@ const SignIn: React.FC = () => {
     const name = e.target.name;
     setCredentials({ ...Credentials, [name]: value });
   };
+
+  // reset userRoute state (prevent double rendering caused by react strict mode v18)
+  // prevent running clean-up function on first render
+  const shouldRun = useRef(false);
+  useEffect(() => {
+    if (shouldRun.current === false) {
+      shouldRun.current = true;
+    } else {
+      return () => {
+        dispatch(resetModal());
+      };
+    }
+  }, []);
+
   useEffect(() => {
     status && navigate('/client/home');
   }, [status]);

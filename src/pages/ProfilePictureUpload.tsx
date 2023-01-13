@@ -21,6 +21,7 @@ const ProfilePictureUpload = () => {
       pfp_url = URL.createObjectURL(file);
     }
   };
+
   const showAlert: boolean = useSelector(selectShowAlert);
   const response: IAlert | null = useSelector(selectResponse);
   const [show, setShow] = useState(false);
