@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Avatar, Dropdown } from 'flowbite-react';
-import { clientSignout } from '../../redux/client/clientSlice';
+import { signout } from '../../redux/user/userSlice';
+import useUserSelector from '../../hooks/useUserSelector';
 
 interface ProfileProps {
   firstName: string | undefined;
@@ -10,6 +11,7 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = props => {
+  const { userType } = useUserSelector();
   const dispatch = useDispatch();
   return (
     <div className="flex md:order-2 invisible md:visible">
@@ -29,7 +31,7 @@ const Profile: React.FC<ProfileProps> = props => {
         <Dropdown.Divider />
         <Dropdown.Item
           onClick={() => {
-            dispatch(clientSignout());
+            dispatch(signout(userType));
           }}
         >
           Sign out

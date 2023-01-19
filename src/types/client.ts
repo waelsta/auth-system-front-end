@@ -1,3 +1,5 @@
+import { UserType } from './user';
+
 export interface IClientSignup {
   phone_number: string;
   first_name: string;
@@ -22,4 +24,5 @@ export interface IClient {
   is_client: boolean;
   profile_picture_url: string;
   profile_picture: File;
+  user_type: UserType;
 }

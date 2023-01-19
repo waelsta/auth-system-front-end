@@ -1,19 +1,15 @@
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navbar } from 'flowbite-react';
 import Menu from './NavBarMenu';
 import Profile from './Profile';
 import Logo from './Logo';
-import {
-  selectCurrentClient,
-  selectStatus
-} from '../../redux/client/ClientSelectors';
+import { selectStatus, selectUser } from '../../redux/user/userSelectors';
+import useUserSelector from '../../hooks/useUserSelector';
 
 const NewNavbar: React.FC = () => {
   const status = useSelector(selectStatus);
-  const client = useSelector(selectCurrentClient);
-
+  const user = useSelector(selectUser);
   return (
     <Navbar className="sticky top-0 bg-[#9900FF]" fluid={true} rounded={true}>
       <Logo
@@ -23,9 +19,9 @@ const NewNavbar: React.FC = () => {
       />
       {status ? (
         <Profile
-          email={client?.email}
-          firstName={client?.first_name}
-          image={client?.profile_picture_url}
+          email={user?.email}
+          firstName={user?.first_name}
+          image={user?.profile_picture_url}
         />
       ) : (
         ''

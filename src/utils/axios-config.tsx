@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { IClient, IClientSignup } from '../types/client';
+import { IClientSignup } from '../types/client';
+import { User, UserType } from '../types/user';
 
 interface ISignindata {
   email: string;
   password: string;
+  userType: UserType;
 }
 
 const API_URL = 'http://localhost:5000/api/v1';
@@ -14,12 +16,14 @@ const axiosClient = axios.create({
   withCredentials: true
 });
 
+//get userType from store after initialisation of store
+
 //axios sign in function
 export const axiosSignIn = async (data: ISignindata) => {
   const { email, password } = data;
   try {
     return await axiosClient.post(
-      '/auth/client/signin',
+      `/auth/signin?user=${data.userType}`,
       { email, password },
       {
         withCredentials: true
@@ -48,9 +52,12 @@ export const axiosClientSignUp = async (client: IClientSignup) => {
   }
 };
 
-export const axiosGetClientData = async (): Promise<IClient> => {
+//axios get user data call
+export const axiosGetUserData = async (
+  currUserType: UserType
+): Promise<User> => {
   try {
-    const { data } = await axiosClient.get<IClient>('/client', {
+    const { data } = await axiosClient.get<User>(`user?=${currUserType}`, {
       withCredentials: true
     });
     return data;
@@ -62,9 +69,9 @@ export const axiosGetClientData = async (): Promise<IClient> => {
   }
 };
 
-export const axiosClientSignout = async () => {
+export const axiosSignout = async (currUserType: UserType) => {
   try {
-    return await axiosClient.post('/auth/client/signout', {
+    return await axiosClient.post(`/auth/user?=${currUserType}/signout`, {
       withCredentials: true
     });
   } catch (err: any) {
@@ -75,10 +82,10 @@ export const axiosClientSignout = async () => {
   }
 };
 
-export const axiosClientProfilePictureUpload = async (clientType: string) => {
+export const axiosProfilePictureUpload = async (currUserType: UserType) => {
   try {
     return await axiosClient.post(
-      `/uploads/profile-picture?user=${clientType}`
+      `/uploads/profile-picture?user=${currUserType}`
     );
   } catch (err: any) {
     if (err.response) {

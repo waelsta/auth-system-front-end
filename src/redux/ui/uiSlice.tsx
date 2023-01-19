@@ -1,12 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { UserType } from '../../types/user';
 
+type IUIstate = {
+  modalState: boolean;
+  modalEndpoint: string;
+  modalParam: UserType;
+  displayAlert: boolean;
+};
+const initialState: IUIstate = {
+  modalState: false,
+  modalEndpoint: '',
+  modalParam: '',
+  displayAlert: false
+};
 const uiSlice = createSlice({
   name: 'ui',
-  initialState: {
-    modalState: false,
-    modalEndpoint: '',
-    modalParam: ''
-  },
+  initialState,
   reducers: {
     setEndpoint: (state, action) => {
       state.modalEndpoint = action.payload;
@@ -21,10 +30,22 @@ const uiSlice = createSlice({
       state.modalState = false;
       state.modalEndpoint = '';
       state.modalParam = '';
+    },
+    displayAlert: state => {
+      state.displayAlert = true;
+    },
+    removeAlert: state => {
+      state.displayAlert = false;
     }
   }
 });
 
-export const { setEndpoint, setParam, ToggleState, resetModal } =
-  uiSlice.actions;
+export const {
+  setEndpoint,
+  setParam,
+  ToggleState,
+  resetModal,
+  displayAlert,
+  removeAlert
+} = uiSlice.actions;
 export const uiReducer = uiSlice.reducer;

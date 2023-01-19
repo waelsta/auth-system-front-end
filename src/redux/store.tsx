@@ -13,12 +13,15 @@ import {
   REGISTER,
   REHYDRATE
 } from 'redux-persist';
-import clientSagas from './client/clientSagas';
 import { uiReducer } from './ui/uiSlice';
+import userReducer from './user/userSlice';
+import { rootSagas } from './rootSagas';
 
 const rootPersistConfig = {
   key: 'root',
-  storage
+  storage,
+  whitelist: ['clientReducer', 'userReducer'],
+  blacklist: ['uiReducer']
 };
 const clientPersistConfig = {
   key: 'clientReducer',
@@ -29,12 +32,19 @@ const clientPersistConfig = {
 const uiPersistConfig = {
   key: 'uiReducer',
   storage,
-  blacklist: ['uiReducer']
+  blacklist: ['ui']
+};
+
+const userPersistConfig = {
+  key: 'userReducer',
+  storage,
+  whitelist: ['userReducer']
 };
 
 const rootReducer = combineReducers({
   clientReducer: persistReducer(clientPersistConfig, clientReducer),
-  uiReducer: persistReducer(uiPersistConfig, uiReducer)
+  uiReducer: persistReducer(uiPersistConfig, uiReducer),
+  userReducer: persistReducer(userPersistConfig, userReducer)
 });
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
@@ -53,6 +63,6 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-sagaMiddleware.run(clientSagas);
+sagaMiddleware.run(rootSagas);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

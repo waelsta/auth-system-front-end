@@ -1,9 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  selectCurrentClient,
-  selectStatus
-} from '../../redux/client/ClientSelectors';
+import { selectCurrentClient } from '../../redux/client/ClientSelectors';
+import { selectStatus } from '../../redux/user/userSelectors';
 import { classicButtonStyles } from '../../styles/common-styles';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

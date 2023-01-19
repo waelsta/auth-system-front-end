@@ -11,8 +11,5 @@ export const selectResponse = (state: RootState) => ({
 export const selectShowAlert = (state: RootState) =>
   state.clientReducer.displayAlert;
 
-export const selectStatus = (state: RootState) =>
-  state.clientReducer.isLoggedIn;
-
 export const selectIsSignedUp = (state: RootState) =>
   state.clientReducer.isFirstTime;
