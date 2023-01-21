@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { User, UserType } from '../../types/user';
+import { UserType } from '../../types/user';
 
 export interface UserState {
   loading: boolean;
@@ -17,7 +17,7 @@ const initialState: UserState = {
   userType: ''
 };
 
-const userReducer = createSlice({
+export const userSlice = createSlice({
   name: 'userReducer',
   initialState,
   reducers: {
@@ -100,6 +100,6 @@ export const {
   profilePictureUpload,
   profilePictureUploadSuccess,
   profilePictureUploadFail
-} = userReducer.actions;
+} = userSlice.actions;
 
-export default userReducer.reducer;
+export const userReducer = userSlice.reducer;

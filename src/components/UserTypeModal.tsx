@@ -28,7 +28,7 @@ const UserTypeModal: React.FC = () => {
       <React.Fragment>
         <Modal show={modalState} size="xl">
           <Modal.Header onClick={() => dispatch(ToggleState())}>
-            <h4>Choose your user type</h4>
+            Choose your user type
           </Modal.Header>
           <Modal.Body>
             <div className="space-y-6 p-6 flex flex-col items-center">

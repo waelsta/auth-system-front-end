@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { all } from 'axios';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 import showAlert from '../../utils/showAlert';
 import { saveClient } from '../client/clientSlice';
 import {

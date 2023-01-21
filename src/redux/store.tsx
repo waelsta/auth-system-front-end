@@ -14,8 +14,8 @@ import {
   REHYDRATE
 } from 'redux-persist';
 import { uiReducer } from './ui/uiSlice';
-import userReducer from './user/userSlice';
-import { rootSagas } from './rootSagas';
+import { userReducer } from './user/userSlice';
+import rootSagas from './rootSagas';
 
 const rootPersistConfig = {
   key: 'root',
@@ -63,6 +63,7 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
+console.log(sagaMiddleware.run(rootSagas));
 sagaMiddleware.run(rootSagas);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
