@@ -21,6 +21,7 @@ const axiosClient = axios.create({
 //axios sign in function
 export const axiosSignIn = async (data: ISignindata) => {
   const { email, password } = data;
+  console.log(email, password, data.userType);
   try {
     return await axiosClient.post(
       `/auth/signin?user=${data.userType}`,
@@ -41,7 +42,7 @@ export const axiosSignIn = async (data: ISignindata) => {
 //axios client sign up call
 export const axiosClientSignUp = async (client: IClientSignup) => {
   try {
-    return await axiosClient.post('/auth/client/signup', client, {
+    return await axiosClient.post('/auth/signup?user=client', client, {
       withCredentials: true
     });
   } catch (err: any) {
@@ -57,7 +58,7 @@ export const axiosGetUserData = async (
   currUserType: UserType
 ): Promise<User> => {
   try {
-    const { data } = await axiosClient.get<User>(`user?=${currUserType}`, {
+    const { data } = await axiosClient.get<User>(`/${currUserType}`, {
       withCredentials: true
     });
     return data;
@@ -71,7 +72,7 @@ export const axiosGetUserData = async (
 
 export const axiosSignout = async (currUserType: UserType) => {
   try {
-    return await axiosClient.post(`/auth/user?=${currUserType}/signout`, {
+    return await axiosClient.post(`/auth/signout?user=${currUserType}`, {
       withCredentials: true
     });
   } catch (err: any) {

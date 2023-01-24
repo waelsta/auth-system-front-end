@@ -77,7 +77,7 @@ const SignIn: React.FC = () => {
         />
         <button
           onClick={() => {
-            dispatch(signin({ Credentials, userType }));
+            dispatch(signin({ ...Credentials, userType }));
           }}
           className={classicButtonStyles}
         >

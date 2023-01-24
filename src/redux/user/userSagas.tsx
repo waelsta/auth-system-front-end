@@ -40,7 +40,8 @@ export function* callSignIn(
 function* callGetUserData(userType: PayloadAction<UserType>): Generator<any> {
   try {
     const response: any = yield call(axiosGetUserData, userType.payload);
-    if (response.user_type === 'client') {
+    if (userType.payload === 'client') {
+      console.log(response);
       yield put(saveClient(response.data));
     }
     yield put(getUserDataSuccess());

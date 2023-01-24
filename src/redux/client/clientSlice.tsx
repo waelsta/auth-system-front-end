@@ -14,20 +14,7 @@ const initialState: clientInitialState = {
   displayAlert: false,
   loading: false,
   error: false,
-  client: {
-    id: '22',
-    first_name: 'test',
-    last_name: 'test',
-    email: 'lskdjflksdjf',
-    phone_number: 1234567890,
-    street: 'test',
-    city: 'test',
-    user_type: 'client',
-    createdAt: { ...new Date() },
-    profile_picture: { ...new File([''], 'test') },
-    profile_picture_url: 'test',
-    is_client: true
-  },
+  client: null,
   message: null,
   isFirstTime: false
 };
