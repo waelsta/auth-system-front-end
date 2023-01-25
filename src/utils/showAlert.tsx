@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { displayAlert, removeAlert } from '../redux/client/clientSlice';
+import { displayAlert, removeAlert } from '../redux/ui/uiSlice';
 
 //create a function that will delay the execution of the next line of code
 const delay = (time: number) =>

@@ -6,11 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '../components/Alert';
 import {
   selectResponse,
-  selectShowAlert,
-  selectStatus
+  selectShowAlert
 } from '../redux/client/ClientSelectors';
-import { clientSignIn } from '../redux/client/clientSlice';
-import { selectFullRoute } from '../redux/ui/uiSelectors';
+import { selectStatus } from '../redux/user/userSelectors';
+import { signin } from '../redux/user/userSlice';
 import { resetModal } from '../redux/ui/uiSlice';
 import {
   classicButtonStyles,
@@ -18,8 +17,10 @@ import {
   inputFieldStyles,
   labelStyles
 } from '../styles/common-styles';
+import useUserTypeSelector from '../hooks/useUserSelector';
 
 const SignIn: React.FC = () => {
+  const { user, userType } = useUserTypeSelector();
   const navigate = useNavigate();
   const showAlert = useSelector(selectShowAlert);
   const status = useSelector(selectStatus);
@@ -76,7 +77,7 @@ const SignIn: React.FC = () => {
         />
         <button
           onClick={() => {
-            dispatch(clientSignIn(Credentials));
+            dispatch(signin({ ...Credentials, userType }));
           }}
           className={classicButtonStyles}
         >

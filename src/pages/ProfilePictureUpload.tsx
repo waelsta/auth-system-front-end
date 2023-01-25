@@ -7,7 +7,7 @@ import {
   selectResponse,
   selectShowAlert
 } from '../redux/client/ClientSelectors';
-import { clientProfilePictureUpload } from '../redux/client/clientSlice';
+import { profilePictureUpload } from '../redux/user/userSlice';
 import { IClient } from '../types/client';
 
 const ProfilePictureUpload = () => {
@@ -38,7 +38,7 @@ const ProfilePictureUpload = () => {
       pfp
         ? formData.append('profile_picture', pfp)
         : formData.append('profile_picture', '');
-      dispatch(clientProfilePictureUpload({ pfp: { ...formData }, pfp_url }));
+      dispatch(profilePictureUpload({ pfp: { ...formData }, pfp_url }));
     }
   };
   return (

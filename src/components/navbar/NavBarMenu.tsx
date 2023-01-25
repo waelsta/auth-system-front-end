@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from 'flowbite-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clientSignout } from '../../redux/client/clientSlice';
+import { signout } from '../../redux/user/userSlice';
 import { setEndpoint, ToggleState } from '../../redux/ui/uiSlice';
+import useUserSelector from '../../hooks/useUserSelector';
+import { selectUserType } from '../../redux/user/userSelectors';
 
 const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
   const { isLoggedIn } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const userType = useSelector(selectUserType);
   return (
     <Navbar.Collapse>
       {isLoggedIn ? (
@@ -23,7 +25,7 @@ const Menu: React.FC<{ isLoggedIn: boolean }> = props => {
           <Navbar.Link
             className="cursor-pointer md:invisible"
             onClick={() => {
-              dispatch(clientSignout());
+              dispatch(signout(userType));
             }}
           >
             Signout
