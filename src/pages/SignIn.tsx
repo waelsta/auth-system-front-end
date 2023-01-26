@@ -20,7 +20,7 @@ import {
 import useUserTypeSelector from '../hooks/useUserSelector';
 
 const SignIn: React.FC = () => {
-  const { user, userType } = useUserTypeSelector();
+  const { userType } = useUserTypeSelector();
   const navigate = useNavigate();
   const showAlert = useSelector(selectShowAlert);
   const status = useSelector(selectStatus);

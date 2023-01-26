@@ -11,7 +11,7 @@ const ClientHomepage: React.FC = () => {
   const status: boolean = useSelector(selectStatus);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!status || !client) navigate('/client/signin');
+    if (!status || !client) navigate('/');
   }, [client, status]);
 
   return (
