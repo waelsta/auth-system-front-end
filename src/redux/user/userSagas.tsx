@@ -41,8 +41,7 @@ function* callGetUserData(userType: PayloadAction<UserType>): Generator<any> {
   try {
     const response: any = yield call(axiosGetUserData, userType.payload);
     if (userType.payload === 'client') {
-      console.log(response);
-      yield put(saveClient(response.data));
+      yield put(saveClient(response));
     }
     yield put(getUserDataSuccess());
     //TODO: add else if for other user types

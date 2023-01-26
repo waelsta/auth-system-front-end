@@ -21,7 +21,6 @@ const axiosClient = axios.create({
 //axios sign in function
 export const axiosSignIn = async (data: ISignindata) => {
   const { email, password } = data;
-  console.log(email, password, data.userType);
   try {
     return await axiosClient.post(
       `/auth/signin?user=${data.userType}`,
@@ -31,7 +30,6 @@ export const axiosSignIn = async (data: ISignindata) => {
       }
     );
   } catch (err: any) {
-    console.log(err);
     if (err.response) {
       throw new Error(err.response.data.error);
     }
